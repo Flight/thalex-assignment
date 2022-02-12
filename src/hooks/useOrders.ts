@@ -1,15 +1,23 @@
-import { useEffect, useRef, useState } from "react";
-import { API_WS_URL } from "../api/urls";
-import { Order, OrdersAPIResponse } from "../typings/Order";
+import { useCallback, useEffect, useState } from "react";
+import {
+  Order,
+  OrderInsert,
+  OrdersAPIResponse,
+  PostOrderResult,
+} from "../typings/Order";
+import { API_BASE_URL, API_WS_URL } from "../api/urls";
+import { post } from "../helpers/http";
 
-export const useOrders = (): Order[] => {
-  const ordersWebsocketRef = useRef(null);
+export const useOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const sendOrder = useCallback(
+    (order: OrderInsert): Promise<PostOrderResult | string> =>
+      post(`${API_BASE_URL}/orders`, order),
+    []
+  );
 
   useEffect(() => {
-    ordersWebsocketRef.current = new WebSocket(`${API_WS_URL}/orders`);
-
-    const ordersWebsocket = ordersWebsocketRef.current;
+    const ordersWebsocket = new WebSocket(`${API_WS_URL}/orders`);
 
     ordersWebsocket.onmessage = (response) => {
       if (!response?.data) {
@@ -49,5 +57,5 @@ export const useOrders = (): Order[] => {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- should run only on load
   }, []);
 
-  return orders;
+  return { orders, sendOrder };
 };

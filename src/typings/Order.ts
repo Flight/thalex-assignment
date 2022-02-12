@@ -1,9 +1,12 @@
+export type OrderSide = "sell" | "buy";
+
 export interface Order {
   id: number;
-  side: "sell" | "buy";
+  side: OrderSide;
   amount: number;
   price: number;
 }
+export type OrderInsert = Omit<Order, "id">;
 
 interface PostOrderResultInserted {
   result: "inserted";
