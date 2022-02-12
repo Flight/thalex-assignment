@@ -1,4 +1,4 @@
-# Initial setup for react app with cypress + jest + eslint + dart-sass
+# Initial setup for react app with cypress + jest + eslint airbnb + dart-sass + stylelint + prettier
 
 # Getting Started with Create React App
 
@@ -28,6 +28,10 @@ Launches the cypress tests runner.
 ### `yarn lint`
 
 Launches the eslint check.
+
+### `yarn stylelint`
+
+Launches the stylelint check.
 
 ### `yarn build`
 
