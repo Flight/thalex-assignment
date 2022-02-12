@@ -1,24 +1,20 @@
 import React from "react";
 import "./App.scss";
+import { Spinner } from "./components/Spinner/Spinner";
+import { useOrders } from "./hooks/useOrders";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export const App = () => {
+  const orders = useOrders();
 
-export default App;
+  return (<div className="App">
+    <h1>Thalex Front-End Developer Technical Assignment Solution</h1>
+    {orders.length === 0 ?
+      <Spinner /> :
+      orders.map(order => (
+        <React.Fragment key={order.id}>
+          {order.amount}{" "}
+        </React.Fragment>
+      ))
+    }
+  </div>);
+};
