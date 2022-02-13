@@ -20,15 +20,15 @@ export const OrderEntryForm: React.FC<OrderEntryFormProps> = ({ onSubmit, amount
   };
 
   return (
-    <form onSubmit={onSubmit} className="OrderEntryForm">
+    <form onSubmit={onSubmit} className="OrderEntryForm" autoComplete="off">
       <label className="OrderEntryForm__label">
         Amount:<br />
-        <input type="text" name="amount" value={amount || ""} onChange={(event) => onAmountChange(event.target.value)} pattern="[0-9]+(\.[0-9]+)?" />
+        <input type="text" name="amount" value={amount || ""} onChange={(event) => onAmountChange(event.target.value)} pattern="[0-9]+(\.[0-9]+)?" required />
       </label>
 
       <label className="OrderEntryForm__label">
         Price:<br />
-        <input type="text" name="price" value={price || ""} onChange={(event) => onPriceChange(event.target.value)} pattern="[0-9]+(\.[0-9]+)?" />
+        <input type="text" name="price" value={price || ""} onChange={(event) => onPriceChange(event.target.value)} pattern="[0-9]+(\.[0-9]+)?" required />
       </label>
 
       <p className="OrderEntryForm__buttons">

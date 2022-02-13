@@ -8,6 +8,11 @@ Linters: eslint with airbnb config, stylelint, prettier
 
 ## Available Scripts
 
+**Backend changes:** CORS headers added
+To run the BE:
+
+### `cd mock_backend && yarn && nodemon .`
+
 ### `yarn start`
 
 Runs the app in the development mode.\

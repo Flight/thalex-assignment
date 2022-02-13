@@ -1,0 +1,11 @@
+{
+  "name": "case_mockapi",
+  "version": "0.0.1",
+  "description": "Mock API backend for Thalex tech assignment",
+  "main": "index.js",
+  "author": "Thalex",
+  "dependencies": {
+    "express": "^4.17.1",
+    "ws": "^7.5.3"
+  }
+}
