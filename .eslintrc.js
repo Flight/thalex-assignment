@@ -39,13 +39,13 @@ module.exports = {
     },
   },
   rules: {
-    indent: ["error", 2],
     "linebreak-style": ["error", "unix"],
     quotes: ["error", "double"],
     semi: ["error", "always"],
     "react/prop-types": 0,
     "react/require-default-props": 0,
     "react/function-component-definition": 0,
+    "newline-before-return": "error",
 
     // Preventng default exports
     // https://www.codeandchaos.com/2021/2021-09-26-JavaScriptDefaultExport/

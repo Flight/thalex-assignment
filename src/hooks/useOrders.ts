@@ -7,6 +7,7 @@ import {
 } from "../typings/Order";
 import { API_BASE_URL, API_WS_URL } from "../api/urls";
 import { post } from "../helpers/http";
+import { debug } from "../helpers/debug";
 
 export const useOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -17,6 +18,9 @@ export const useOrders = () => {
   );
 
   useEffect(() => {
+    // TODO: Implement the reconnection mechanism if connection fails
+    // Good place to implement the exponential backoff retry mechanism
+
     const ordersWebsocket = new WebSocket(`${API_WS_URL}/orders`);
 
     ordersWebsocket.onmessage = (response) => {
@@ -49,6 +53,10 @@ export const useOrders = () => {
       if (ordersToAdd?.length ?? 0) {
         setOrders((oldOrders) => ordersToAdd.concat(oldOrders));
       }
+    };
+
+    ordersWebsocket.onerror = (error) => {
+      debug.error("useOrders", `Failed to get the orders list: ${error}`);
     };
 
     return () => {
