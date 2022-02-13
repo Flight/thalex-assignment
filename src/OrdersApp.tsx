@@ -6,6 +6,7 @@ import { debug } from "./helpers/debug";
 import { useOrders } from "./hooks/useOrders";
 import { Order, OrderSide, PostOrderResult } from "./typings/Order";
 import { getMarkPrice } from "./helpers/markPrice";
+import { DECIMALS_AMOUNT } from "./helpers/constants";
 
 export const OrdersApp = () => {
   const { orders, sendOrder } = useOrders();
@@ -65,7 +66,8 @@ export const OrdersApp = () => {
 
 
   return (<div className="OrdersApp">
-    <h1>Thalex Front-End Developer Technical Assignment Solution</h1>
+    <h1>Orders</h1>
+    <h2>Thalex Front-End Developer Technical Assignment Solution</h2>
 
     <OrderEntryForm
       amount={amount}
@@ -79,7 +81,7 @@ export const OrdersApp = () => {
       onSideChange={setSide}
     />
 
-    Sell:
+    <p><strong>Sell:</strong></p>
     <OrderTable
       type="sell"
       orders={orders.filter(order => order.side === "sell")}
@@ -87,14 +89,14 @@ export const OrdersApp = () => {
       onOrderSelect={(order) => prefillOrderForm(order)}
     />
 
-    {markPrice && <p>Mark price: {markPrice}</p>}
+    {markPrice && <p>Mark price: <strong>{markPrice.toFixed(DECIMALS_AMOUNT)}</strong></p>}
 
-    Buy:
+    <p><strong>Buy:</strong></p>
     <OrderTable
       type="buy"
       orders={orders.filter(order => order.side === "buy")}
       sentOrderIds={sentOrderIds}
       onOrderSelect={(order) => prefillOrderForm(order)}
     />
-  </div>);
+  </div >);
 };

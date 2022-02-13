@@ -3,5 +3,6 @@ module.exports = {
   rules: {
     // Components className should start with capital letter
     "selector-class-pattern": null,
+    "color-function-notation": "legacy",
   },
 };

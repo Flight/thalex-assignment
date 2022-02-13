@@ -68,6 +68,9 @@ module.exports = {
 
     "react/jsx-filename-extension": "off",
 
+    // Allows nesting inputs inside labels
+    "jsx-a11y/label-has-associated-control": 0,
+
     // Dropping the file extensions
     // https://stackoverflow.com/a/59268871
     "import/extensions": [

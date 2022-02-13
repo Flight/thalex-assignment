@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import "./OrderTable.scss";
 import { Spinner } from "../Spinner/Spinner";
 import { Order, OrderSide } from "../../typings/Order";
-import "./OrderTable.scss";
+import { DECIMALS_AMOUNT } from "../../helpers/constants";
+
+// Time after user stops scrolling
+// to move scroll position back to most important rows
+const SCROLL_BACK_TIMEOUT = 5000;
 
 interface OrderTableProps {
   type: OrderSide,
@@ -44,7 +49,7 @@ export const OrderTable: React.FC<OrderTableProps> = ({ type, orders, sentOrderI
       setIsUserScrolling(true);
       scrollTimer.current = setTimeout(() => {
         setIsUserScrolling(false);
-      }, 5000);
+      }, SCROLL_BACK_TIMEOUT);
     };
 
     tbody.addEventListener("wheel", onBodyScroll, true);
@@ -62,29 +67,27 @@ export const OrderTable: React.FC<OrderTableProps> = ({ type, orders, sentOrderI
   }
 
   return (
-    <div className="OrderTable">
-      <table className={`OrderTable__table ${type === "sell" ? "OrderTable_sell" : "OrderTable_buy"}`}>
-        <thead>
-          <tr>
-            <th>price</th>
-            <th>size</th>
-            <th>total</th>
-          </tr>
-        </thead>
-        <tbody ref={tbodyRef}>
-          {orders.sort((a, b) => b.price - a.price).map(order => {
-            const { id, price, amount } = order;
+    <table className={`OrderTable ${type === "sell" ? "OrderTable--sell" : "OrderTable--buy"}`}>
+      <thead>
+        <tr>
+          <th>price</th>
+          <th>size</th>
+          <th>total</th>
+        </tr>
+      </thead>
+      <tbody ref={tbodyRef}>
+        {orders.sort((a, b) => b.price - a.price).map(order => {
+          const { id, price, amount } = order;
 
-            return (
-              <tr key={id} className={sentOrderIds.includes(id) ? "text-green" : ""} onClick={() => onOrderSelect(order)}>
-                <td>{price}</td>
-                <td>{amount}</td>
-                <td>{price * amount}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+          return (
+            <tr key={id} className={sentOrderIds.includes(id) ? "highlight" : ""} onClick={() => onOrderSelect(order)}>
+              <td>{price.toFixed(DECIMALS_AMOUNT)}</td>
+              <td>{amount.toFixed(DECIMALS_AMOUNT)}</td>
+              <td>{(price * amount).toFixed(DECIMALS_AMOUNT)}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 };

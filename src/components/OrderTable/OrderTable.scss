@@ -1,46 +1,62 @@
 .OrderTable {
-  &__table {
-    width: 100%;
-    border-collapse: collapse;
-    box-sizing: border-box;
+  width: 100%;
+  border-collapse: collapse;
+  border: solid 1px gray;
+
+  th {
+    text-transform: uppercase;
   }
 
-  table,
-  tr td {
+  td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     border: 1px solid grey;
-  }
-
-  tr {
-    cursor: pointer;
-    &:hover {
-      background-color: #ff0;
-    }
-  }
-
-  tbody {
-    display: block;
-    height: 200px;
-    overflow: auto;
+    text-align: right;
+    padding: 0 5px;
   }
 
   thead,
   tbody tr {
     display: table;
     width: 100%;
-    table-layout: fixed; /* even columns width , fix width of table too*/
+    table-layout: fixed;
   }
 
-  thead {
-    width: calc(
-      100% - 1em
-    ); /* scrollbar is average 1em/16px width, remove it from thead width */
+  tbody {
+    display: block;
+    height: 200px;
+    overflow: auto;
+
+    tr {
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(255, 255, 0);
+      }
+
+      &.highlight {
+        font-weight: bold;
+        color: rgb(0, 123, 255);
+      }
+    }
   }
 
-  &_sell {
-    background-color: rgb(255, 224, 224);
+  &--sell {
+    background-color: rgba(255, 255, 0, 10%);
+
+    /* stylelint-disable-next-line no-descending-specificity */
+    tr:nth-last-child(even) {
+      background-color: rgba(255, 255, 0, 5%);
+    }
   }
 
-  &_buy {
-    background-color: rgb(224, 255, 226);
+  &--buy {
+    background-color: rgba(0, 128, 0, 10%);
+
+    /* stylelint-disable-next-line no-descending-specificity */
+    tr:nth-child(even) {
+      background-color: rgba(0, 128, 0, 5%);
+    }
   }
 }

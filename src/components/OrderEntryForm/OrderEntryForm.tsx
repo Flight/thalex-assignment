@@ -1,4 +1,5 @@
 import React from "react";
+import "./OrderEntryForm.scss";
 import { OrderSide } from "../../typings/Order";
 
 interface OrderEntryFormProps {
@@ -18,15 +19,25 @@ export const OrderEntryForm: React.FC<OrderEntryFormProps> = ({ onSubmit, amount
     onSideChange(clickEvent.target.value);
   };
 
-  return (<>
-    <form onSubmit={onSubmit}>
-      <input type="text" name="amount" value={amount || ""} onChange={(event) => onAmountChange(event.target.value)} pattern="[0-9]+(\.[0-9]+)?" />
-      <input type="text" name="price" value={price || ""} onChange={(event) => onPriceChange(event.target.value)} pattern="[0-9]+(\.[0-9]+)?" />
+  return (
+    <form onSubmit={onSubmit} className="OrderEntryForm">
+      <label className="OrderEntryForm__label">
+        Amount:<br />
+        <input type="text" name="amount" value={amount || ""} onChange={(event) => onAmountChange(event.target.value)} pattern="[0-9]+(\.[0-9]+)?" />
+      </label>
 
-      <button type="submit" disabled={isDisabled} value="buy" onClick={onSideChangeClick}>Buy</button>
-      <button type="submit" disabled={isDisabled} value="sell" onClick={onSideChangeClick}>Sell</button>
+      <label className="OrderEntryForm__label">
+        Price:<br />
+        <input type="text" name="price" value={price || ""} onChange={(event) => onPriceChange(event.target.value)} pattern="[0-9]+(\.[0-9]+)?" />
+      </label>
+
+      <p className="OrderEntryForm__buttons">
+        <button type="submit" disabled={isDisabled} value="buy" onClick={onSideChangeClick} className="OrderEntryForm__button OrderEntryForm__button--buy">Buy</button>
+
+        <button type="submit" disabled={isDisabled} value="sell" onClick={onSideChangeClick} className="OrderEntryForm__button OrderEntryForm__button--sell">Sell</button>
+      </p>
+
+      {resultMessage && <p className={`OrderEntryForm__result ${isSubmitError && "OrderEntryForm__result--error"}`}>{resultMessage}</p>}
     </form>
-
-    {resultMessage && <h2 className={isSubmitError ? "text-red" : ""}>{resultMessage}</h2>}
-  </>);
+  );
 };
