@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import "./App.scss";
-import { Spinner } from "./components/Spinner/Spinner";
+import "./OrdersApp.scss";
+import { OrderEntryForm } from "./components/OrderEntryForm/OrderEntryForm";
+import { OrderTable } from "./components/OrderTable/OrderTable";
 import { debug } from "./helpers/debug";
 import { useOrders } from "./hooks/useOrders";
 import { Order, OrderSide, PostOrderResult } from "./typings/Order";
+import { getMarkPrice } from "./helpers/markPrice";
 
-export const App = () => {
+export const OrdersApp = () => {
   const { orders, sendOrder } = useOrders();
   // Better to save to the session / local storage
   const [sentOrderIds, setSentOrderIds] = useState<number[]>([]);
@@ -15,6 +17,7 @@ export const App = () => {
   const [isSending, setIsSending] = useState(false);
   const [sendResult, setSendResult] = useState(null);
   const [isSubmitError, setIsSubmitError] = useState(false);
+  const markPrice = getMarkPrice(orders);
 
   const prefillOrderForm = (order: Order) => {
     setAmount(order.amount.toString());
@@ -59,25 +62,39 @@ export const App = () => {
     setIsSending(false);
   };
 
-  return (<div className="App">
+
+
+  return (<div className="OrdersApp">
     <h1>Thalex Front-End Developer Technical Assignment Solution</h1>
 
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="amount" value={amount || ""} onChange={(changeEvent) => setAmount(changeEvent.target.value)} pattern="[0-9]+(\.[0-9]+)?" />
-      <input type="text" name="price" value={price || ""} onChange={(changeEvent) => setPrice(changeEvent.target.value)} pattern="[0-9]+(\.[0-9]+)?" />
+    <OrderEntryForm
+      amount={amount}
+      price={price}
+      isDisabled={isSending}
+      isSubmitError={isSubmitError}
+      resultMessage={sendResult}
+      onSubmit={handleSubmit}
+      onAmountChange={setAmount}
+      onPriceChange={setPrice}
+      onSideChange={setSide}
+    />
 
-      <button type="submit" disabled={isSending} onClick={() => setSide("buy")}>Buy</button>
-      <button type="submit" disabled={isSending} onClick={() => setSide("sell")}>Sell</button>
-    </form>
-    {sendResult && <h2 className={isSubmitError ? "text-red" : ""}>{sendResult}</h2>}
+    Sell:
+    <OrderTable
+      type="sell"
+      orders={orders.filter(order => order.side === "sell")}
+      sentOrderIds={sentOrderIds}
+      onOrderSelect={(order) => prefillOrderForm(order)}
+    />
 
-    {orders.length === 0 ?
-      <Spinner /> :
-      orders.map(order => (
-        <button type="button" key={order.id} className={sentOrderIds.includes(order.id) ? "text-green" : ""} onClick={() => prefillOrderForm(order)}>
-          {order.id} {order.side} {order.amount} {order.price}
-        </button>
-      ))
-    }
+    {markPrice && <p>Mark price: {markPrice}</p>}
+
+    Buy:
+    <OrderTable
+      type="buy"
+      orders={orders.filter(order => order.side === "buy")}
+      sentOrderIds={sentOrderIds}
+      onOrderSelect={(order) => prefillOrderForm(order)}
+    />
   </div>);
 };

@@ -1,0 +1,46 @@
+.OrderTable {
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    box-sizing: border-box;
+  }
+
+  table,
+  tr td {
+    border: 1px solid grey;
+  }
+
+  tr {
+    cursor: pointer;
+    &:hover {
+      background-color: #ff0;
+    }
+  }
+
+  tbody {
+    display: block;
+    height: 200px;
+    overflow: auto;
+  }
+
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; /* even columns width , fix width of table too*/
+  }
+
+  thead {
+    width: calc(
+      100% - 1em
+    ); /* scrollbar is average 1em/16px width, remove it from thead width */
+  }
+
+  &_sell {
+    background-color: rgb(255, 224, 224);
+  }
+
+  &_buy {
+    background-color: rgb(224, 255, 226);
+  }
+}

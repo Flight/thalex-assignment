@@ -47,6 +47,13 @@ module.exports = {
     "react/function-component-definition": 0,
     "newline-before-return": "error",
 
+    // Alows callbacks typing in interfaces props
+    // onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { varsIgnorePattern: "^_(?!n$).+" },
+    ],
+
     // Preventng default exports
     // https://www.codeandchaos.com/2021/2021-09-26-JavaScriptDefaultExport/
     "import/no-default-export": "error",
