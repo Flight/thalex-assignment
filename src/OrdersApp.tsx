@@ -63,8 +63,6 @@ export const OrdersApp = () => {
     setIsSending(false);
   };
 
-
-
   return (<div className="OrdersApp">
     <h1>Orders</h1>
     <h2>Thalex Front-End Developer Technical Assignment Solution</h2>

@@ -1,17 +1,30 @@
 # Thalex Front-End Developer Technical Assignment Solution
 
-Framework: ReactJS
-Unit-tests: Jest + React Testing Library
-Integration tests: Cypress
-Scss implementation: Dart Sass
-Linters: eslint with airbnb config, stylelint, prettier
+**Framework:** ReactJS
+
+**Unit-tests:** Jest + React Testing Library
+
+**Integration tests:** Cypress
+
+**Scss implementation:** Dart Sass
+
+**Linters:** eslint with airbnb config, stylelint, prettier
 
 ## Available Scripts
 
+### Backend
+
 **Backend changes:** CORS headers added
-To run the BE:
 
 ### `cd mock_backend && yarn && nodemon .`
+
+Runs the backend with CORS headers.
+
+### Frontend
+
+### `yarn`
+
+Installs the frontend dependencies.
 
 ### `yarn start`
 
